@@ -104,7 +104,7 @@ ScreenManager:
             text: 'Viel Glück'                      # Text 
             halign: 'center'
             size_hint_y: 0.15
-            font_size: dp(25)
+            font_size: dp(30)
             pos_hint: {"center_x": 0.5, "top": 1}
             opacity: 0
         
@@ -113,32 +113,69 @@ ScreenManager:
             text: ''                                # Text wird im Python Code generiert
             halign: 'center'
             size_hint_y: 0.15
-            font_size: dp(20)
-            pos_hint: {"center_x": 0.5, "top": 0.8}
+            font_size: dp(30)
+            pos_hint: {"center_x": 0.5, "top": 0.83}
             opacity: 0
+            underline: True
 
             
         MDRoundFlatButton:
             id: btn1
             text: ''
-            size_hint_y: 0.07
-            size_hint_x: 0.30
-            pos_hint: {'x': 0.02,'top': 0.6}
+            font_size: dp(20)
+            line_width: 1.5
+            size_hint_y: 0.05
+            size_hint_x: 0.25
+            pos_hint: {'x': 0.05,'top': 0.63}
             opacity: 0
+            disabled: True
             on_press: root.check_answer(self.text)
         MDRoundFlatButton:
             id: btn2
             text: ''
-            size_hint_y: 0.07
-            size_hint_x: 0.30
-            pos_hint: {'center_x': 0.5,'top': 0.6}
+            font_size: dp(20)
+            line_width: 1.5
+            size_hint_y: 0.05
+            size_hint_x: 0.25
+            pos_hint: {'center_x': 0.5,'top': 0.63}
             opacity: 0
+            disabled: True
             on_press: root.check_answer(self.text)
         MDRoundFlatButton:
             id: btn3
             text: ''
-            size_hint_y: 0.07
-            size_hint_x: 0.30
-            pos_hint: {'right': .98,'top': 0.6}
+            font_size: dp(20)
+            line_width: 1.5
+            size_hint_y: 0.05
+            size_hint_x: 0.25
+            pos_hint: {'right': .95,'top': 0.63}
             opacity: 0
+            disabled: True
             on_press: root.check_answer(self.text)
+    MDCard:                                                      # Card für die Counter
+        id: card_counter                                         
+        size_hint_x: 0.6
+        size_hint_y: 0.2
+        pos_hint: {"y": 0.3, "center_x": .5}
+        elevation: 2
+        opacity: 0                                              # Unsichtbar bevor nicht start gedrückt wird
+        disabled: True
+        MDFloatLayout:
+            MDLabel:
+                id: label_richtige                              # id für den Counter Richtige 
+                text: 'Richtige:'                               # Text
+                halign: 'center'
+                font_size: dp(22)
+                size_hint_y: 0.15
+                size_hint_x: 0.5
+                pos_hint: {"top": 0.75, "center_x": .5}
+                opacity: 0                                      # Unsichtbar beim betreten
+            MDLabel:
+                id: label_falsche                              # id für den Counter Falsche
+                text: "Falsche:"
+                halign: 'center'
+                font_size: dp(22)
+                size_hint_y: 0.15
+                size_hint_x: 0.5
+                pos_hint: {"top": 0.45, "center_x": .5}
+                opacity: 0                                      # Unsichtbar beim betreten
