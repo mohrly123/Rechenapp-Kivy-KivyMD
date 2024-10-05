@@ -6,6 +6,7 @@ from kivymd.uix.screen import MDScreen
 from kivymd.uix.screenmanager import MDScreenManager
 from kivy.clock import Clock
 import random
+import os
 
 
 class Startseite(MDScreen):
@@ -42,7 +43,8 @@ class PlusMinus(MDScreen):
     def close(self):                            # startet die close_btn methode mit 0.2 sek verzögerung
         Clock.schedule_once(self.close_btn, 0.2)
     
-    def close_btn(self, dt):                    # Methode um den Startbtn sichtbar zu machen und das eigentliche Programm zu schließen
+    def close_btn(self, dt):                        # Methode um den Startbtn sichtbar zu machen und das eigentliche Programm zu schließen
+        
         self.ids.start.opacity = 1              # Start Button anzeigen
         self.ids.start.disabled = False         # Start Button aktivieren
         self.ids.willkommen_label.opacity = 0   # Willkommen Label auf unsichtbar setzen
@@ -63,6 +65,7 @@ class PlusMinus(MDScreen):
         self.ids.label_falsche.text = f"Falsche: {self.counter_F}"          # Den Text auch wieder auf 0 setzen
         self.ids.willkommen_label.text = "Willkommen zurück!"               # Nach dem Widerbetreten den Text anzeigen
         self.ids.willkommen_label.color = "orange"                          # Nach dem Wiederbetreten die Farbe auf orange setzen
+        
 
     def rechnung_erstellen(self):               # Logik um eine Rechnung zu bauen
         try:
@@ -125,13 +128,15 @@ class PlusMinus(MDScreen):
             print("Ungültige Eingabe: Keine Zahl")
             self.ids.willkommen_label.text = "Ungültige Eingabe"
             self.ids.willkommen_label.color = [1, 0.5, 0, 1]  # Setze die Farbe auf Orange für ungültige Eingabe
-
+            
 
 
 class Myyapp(MDApp):
     def build(self):
-        Window.size = (411,731)
-        Config.set('graphics', 'dpi', '160')
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "LightGreen"
+        #Window.size = (411,731)
+        #Config.set('graphics', 'dpi', '160')
         return Builder.load_file("desi.kv")
     
 if __name__ == "__main__":
