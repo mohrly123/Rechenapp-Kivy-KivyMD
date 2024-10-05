@@ -13,6 +13,11 @@ class Startseite(MDScreen):
         
 
 class PlusMinus(MDScreen):
+    def __init__(self,**kwargs):
+        super(PlusMinus, self).__init__(**kwargs)
+        self.counter_R = 0                      # Den Counter für die Richtigen erstellen
+        self.counter_F = 0                      # Den Counter für die Falschen erstellen
+    
     def start(self):                            # startet die start_btn methode mit 0.2 sek verzögerung
         Clock.schedule_once(self.start_btn, 0.2)
     
@@ -24,6 +29,14 @@ class PlusMinus(MDScreen):
         self.ids.btn1.opacity = 1               # btn1 auf sichtbar
         self.ids.btn2.opacity = 1               # btn2 auf sichtbar
         self.ids.btn3.opacity = 1               # btn3 auf sichtbar
+        self.ids.btn1.disabled = False          # btn1 aktivieren
+        self.ids.btn2.disabled = False          # btn2 aktivieren
+        self.ids.btn3.disabled = False          # btn3 aktivieren
+        self.ids.card_counter.opacity = 1       # Card beim betreten aktivieren
+        self.ids.card_counter.disabled = False  # Card aktivieren
+        self.ids.label_richtige.opacity = 1     # Label Counter Richtige aktivieren
+        self.ids.label_falsche.opacity = 1      # Label Counter Falsche aktivieren
+        
         self.rechnung_erstellen()
 
     def close(self):                            # startet die close_btn methode mit 0.2 sek verzögerung
@@ -37,6 +50,19 @@ class PlusMinus(MDScreen):
         self.ids.btn1.opacity = 0               # btn1 auf unsichtbar
         self.ids.btn2.opacity = 0               # btn2 auf unsichtbar
         self.ids.btn3.opacity = 0               # btn3 auf unsichtbar
+        self.ids.btn1.disabled = True           # btn1 deaktivieren
+        self.ids.btn2.disabled = True           # btn 2 deaktivieren
+        self.ids.btn3.disabled = True           # btn 3 deaktivieren
+        self.ids.card_counter.opacity = 0       # Card beim betreten deaktivieren
+        self.ids.card_counter.disabled = True   # Card deaktivieren
+        self.ids.label_richtige.opacity = 0     # Label Counter Richtige deaktivieren
+        self.ids.label_falsche.opacity = 0      # Label Counter Falsche deaktivieren
+        self.counter_R = 0                      # Beim Closen den Counter auf 0 setzten
+        self.ids.label_richtige.text = f"Richtige: {self.counter_R}"        # Den Text auch wieder auf 0 setzen
+        self.counter_F = 0                      # Beim Closen den Counter auf 0 setzten
+        self.ids.label_falsche.text = f"Falsche: {self.counter_F}"          # Den Text auch wieder auf 0 setzen
+        self.ids.willkommen_label.text = "Willkommen zurück!"               # Nach dem Widerbetreten den Text anzeigen
+        self.ids.willkommen_label.color = "orange"                          # Nach dem Wiederbetreten die Farbe auf orange setzen
 
     def rechnung_erstellen(self):               # Logik um eine Rechnung zu bauen
         try:
@@ -82,20 +108,30 @@ class PlusMinus(MDScreen):
 
     
     def check_answer(self, button_text):
-        # Prüfe, ob die gewählte Antwort richtig ist
-        if int(button_text) == self.ergebnis:
-            print("Richtige Antwort!")
-            self.ids.willkommen_label = "Richtige Antwort!"
-            self.rechnung_erstellen()
+    # Überprüfen, ob button_text nicht leer ist und eine Zahl darstellt
+        if button_text.isdigit():
+            if int(button_text) == self.ergebnis:
+                self.counter_R += 1  # Counter für die richtigen um 1 erhöhen
+                self.ids.label_richtige.text = f"Richtige: {self.counter_R}"
+                self.ids.willkommen_label.text = "Richtige Antwort!"
+                self.ids.willkommen_label.color = [0, 1, 0, 1]  # Setze die Farbe des Textes auf Grün
+                self.rechnung_erstellen()  # Wenn die Antwort richtig war, eine neue Rechnung erstellen
+            else:
+                self.ids.willkommen_label.text = "Falsche Antwort!"
+                self.counter_F += 1  # Counter für die falschen um 1 erhöhen
+                self.ids.label_falsche.text = f"Falsche: {self.counter_F}"
+                self.ids.willkommen_label.color = [1, 0, 0, 1]  # Setze die Farbe auf Rot für falsche Antwort
         else:
-            print("Falsche Antwort!")
-            self.willkommen_label = "Falsche Antwort!"
+            print("Ungültige Eingabe: Keine Zahl")
+            self.ids.willkommen_label.text = "Ungültige Eingabe"
+            self.ids.willkommen_label.color = [1, 0.5, 0, 1]  # Setze die Farbe auf Orange für ungültige Eingabe
+
 
 
 class Myyapp(MDApp):
     def build(self):
-        #Window.size = (411,731)
-        #Config.set('graphics', 'dpi', '160')
+        Window.size = (411,731)
+        Config.set('graphics', 'dpi', '160')
         return Builder.load_file("desi.kv")
     
 if __name__ == "__main__":
