@@ -83,4 +83,62 @@ ScreenManager:
             on_press:
                 root.manager.current = "startseite"
                 app.root.transition.direction ="down"
+                root.close()
+
+    MDFloatLayout: # Start Button 
+        MDRaisedButton:
+            id: start
+            text: 'Start'
+            size_hint_x: 0.7
+            size_hint_y: 0.3
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            opacity: 1
+            disabled: False
+            on_press: root.start()
+
+
+    MDFloatLayout:                                      # Layout für das eigentliche Programm / Soll erst nach drücken ds Start btn sichtbar werden
         
+        MDLabel:                                    # WillkommensLabel
+            id: willkommen_label                    # id = wilkommen_label
+            text: 'Viel Glück'                      # Text 
+            halign: 'center'
+            size_hint_y: 0.15
+            font_size: dp(25)
+            pos_hint: {"center_x": 0.5, "top": 1}
+            opacity: 0
+        
+        MDLabel:                                    # Label wo die RECHNUNG generiert wird
+            id: rechnung                            # id = rechnung
+            text: ''                                # Text wird im Python Code generiert
+            halign: 'center'
+            size_hint_y: 0.15
+            font_size: dp(20)
+            pos_hint: {"center_x": 0.5, "top": 0.8}
+            opacity: 0
+
+            
+        MDRoundFlatButton:
+            id: btn1
+            text: ''
+            size_hint_y: 0.07
+            size_hint_x: 0.30
+            pos_hint: {'x': 0.02,'top': 0.6}
+            opacity: 0
+            on_press: root.check_answer(self.text)
+        MDRoundFlatButton:
+            id: btn2
+            text: ''
+            size_hint_y: 0.07
+            size_hint_x: 0.30
+            pos_hint: {'center_x': 0.5,'top': 0.6}
+            opacity: 0
+            on_press: root.check_answer(self.text)
+        MDRoundFlatButton:
+            id: btn3
+            text: ''
+            size_hint_y: 0.07
+            size_hint_x: 0.30
+            pos_hint: {'right': .98,'top': 0.6}
+            opacity: 0
+            on_press: root.check_answer(self.text)
