@@ -1,0 +1,86 @@
+#desi.kv
+ScreenManager:
+    Startseite:
+        name: "startseite"
+    PlusMinus:
+        name: "plusminus"
+    
+<Startseite>:                                                   ### Startseite
+    MDFloatLayout:
+        FitImage:
+            source: 'start.jpeg'  # Pfad zu deinem Bild
+            size_hint_y: 0.4  # Höhe des Bildes
+            pos_hint: {"top": 1}  # Bild ganz oben platzieren
+        MDLabel:
+            text: 'Willkommen zur Rechenapp'
+            halign: 'center'
+            size_hint_y: 0.2
+            pos_hint: {"center_x" :.5, "top": .65}
+            font_size: dp(26)
+        MDCard:
+            elevation: 2
+            size_hint_x: 0.85
+            size_hint_y: 0.45
+            pos_hint: {"y": 0.05, "center_x": 0.5}
+            # Verwende ein BoxLayout innerhalb der Karte, um die Elemente zu organisieren
+            BoxLayout:
+                orientation: 'vertical'
+                padding: dp(20)
+                spacing: dp(20)
+                
+                MDLabel:
+                    text: "Wähle aus was du machen willst"
+                    halign: 'center'
+                    size_hint_y: 0.1
+                    font_size: dp(15)
+                
+                MDRoundFlatIconButton:
+                    text: 'Plus Minus Rechnungen'
+                    icon: "menu"
+                    line_width: 1.5
+                    size_hint_y: 0.02  
+                    size_hint_x: 0.8         
+                    pos_hint: {"center_x": 0.5}
+                    on_press:
+                        root.manager.current ="plusminus"
+                        app.root.transition.direction ="up"
+
+                MDRoundFlatIconButton:
+                    text: 'Sachaufgaben'
+                    icon: "menu"
+                    line_width: 1.5
+                    size_hint_y: 0.02  
+                    size_hint_x: 0.8         
+                    pos_hint: {"center_x": 0.5}
+
+                MDRoundFlatIconButton:
+                    text: 'Platzhalter'
+                    icon: "menu"
+                    line_width: 1.5
+                    size_hint_y: 0.02  
+                    size_hint_x: 0.8         
+                    pos_hint: {"center_x": 0.5}
+
+                MDRoundFlatIconButton:
+                    text: 'Platzhalter'
+                    icon: "menu"
+                    line_width: 1.5
+                    size_hint_y: 0.02  
+                    size_hint_x: 0.8         
+                    pos_hint: {"center_x": 0.5}
+
+
+                            
+               
+<Plusminus>:                                                    ### PlusMinus Abteilung
+    MDFloatLayout:
+        
+        MDIconButton:  # Close Button für das PlusMinus Fenster
+            icon: "close"
+            size_hint_y: 0.05
+            size_hint_x: 0.05
+            pos_hint: {"top":1, "x": 0.93}
+            on_press:
+                root.manager.current = "startseite"
+                app.root.transition.direction ="down"
+        
