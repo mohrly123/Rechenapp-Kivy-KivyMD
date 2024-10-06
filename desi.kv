@@ -4,11 +4,13 @@ ScreenManager:
         name: "startseite"
     PlusMinus:
         name: "plusminus"
+    Sachaufgaben:
+        name: "sachaufgaben"
     
 <Startseite>:                                                   ### Startseite
     MDFloatLayout:
         FitImage:
-            source: 'start.jpeg'  # Pfad zu deinem Bild
+            source: 'start.jpg'  # Pfad zu deinem Bild
             size_hint_y: 0.4  # Höhe des Bildes
             pos_hint: {"top": 1}  # Bild ganz oben platzieren
         MDLabel:
@@ -52,6 +54,9 @@ ScreenManager:
                     size_hint_y: 0.02  
                     size_hint_x: 0.8         
                     pos_hint: {"center_x": 0.5}
+                    on_press:
+                        root.manager.current ="sachaufgaben"
+                        app.root.transition.direction ="up"
 
                 MDRoundFlatIconButton:
                     text: 'Platzhalter'
@@ -67,11 +72,7 @@ ScreenManager:
                     line_width: 1.5
                     size_hint_y: 0.02  
                     size_hint_x: 0.8         
-                    pos_hint: {"center_x": 0.5}
-
-
-                            
-               
+                    pos_hint: {"center_x": 0.5}      
 <Plusminus>:                                                    ### PlusMinus Abteilung
     MDFloatLayout:
         
@@ -179,3 +180,151 @@ ScreenManager:
                 size_hint_x: 0.5
                 pos_hint: {"top": 0.45, "center_x": .5}
                 opacity: 0                                      # Unsichtbar beim betreten
+
+
+
+
+<Sachaufgaben>:
+    MDFloatLayout:
+        MDIconButton:  # Close Button für das PlusMinus Fenster
+            icon: "close"
+            size_hint_y: 0.05
+            size_hint_x: 0.05
+            pos_hint: {"top":1, "x": 0.93}
+            on_press:
+                root.manager.current = "startseite"
+                app.root.transition.direction ="down"
+                root.close_sachaufgaben()
+    MDFloatLayout: # Start Button 
+        MDRectangleFlatButton:
+            id: start_btn_sachaufgaben
+            text: "Start"
+            size_hint_x: 0.7
+            size_hint_y: 0.2
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            opacity: 1
+            disabled: False
+            on_press: root.start_sachaufgaben()
+
+    MDFloatLayout:                                  # Layout für die Cards
+        MDLabel:
+            id: ergebnis_sachaufgaeben              # ErgebnisLabel für die Pyramidenrechnungen
+            text: ''                                # Wird im Pycode gelegt
+            halign: 'center'
+            size_hint_y: 0.2
+            pos_hint: {"center_x": 0.5, "top": 0.9}
+            opacity: 0
+            
+
+
+        MDCard:                                     # 1 Card oben
+            id: topcard                             # ID Card
+            size_hint_y: 0.08
+            size_hint_x: 0.3
+            pos_hint: {"center_x": .5, "top": .65}
+            opacity: 0                              # Beim betreten des Screens unsichtbar
+            disabled: True                          # Beim betreten des Screens deaktiviert
+            MDTextField:                            # Label im der top card
+                id: input_top
+                text: ''
+                halign: 'center'
+                size_hint_x: 0.8
+                pos_hint: {"center_x": .5, "center_y": .5}
+                required: False                             # Text ist nicht erforderlich / Auf True setzen wenn es ein Ergebnis fordert
+                readonly: False                             # Nur lesen ist auf False
+                active_line: False
+
+        MDCard:                                         # 2 Card Mitte links
+            id: middle_left_card
+            size_hint_y: 0.08
+            size_hint_x: 0.3
+            pos_hint: {"center_x": .34, "top": .56}
+            opacity: 0
+            disabled: True
+            MDTextField:                                    # Label im der top card
+                id: input_middle_left
+                text: ''
+                halign: 'center'
+                size_hint_x: 0.8
+                pos_hint: {"center_x": .5, "center_y": .5}
+                required: False                             # Text ist nicht erforderlich / Auf True setzen wenn es ein Ergebnis fordert
+                readonly: False                             # Nur lesen ist auf False
+                active_line: False
+
+        MDCard:                                         # 2 Card Mitte links
+            id: middle_right_card
+            size_hint_y: 0.08
+            size_hint_x: 0.3
+            pos_hint: {"center_x": .66, "top": .56}
+            opacity: 0
+            disabled: True
+            MDTextField:                                    # Label im der top card
+                id: input_middle_right           
+                text: ''
+                halign: 'center'
+                size_hint_x: 0.8
+                pos_hint: {"center_x": .5, "center_y": .5}
+                required: False                             # Text ist nicht erforderlich / Auf True setzen wenn es ein Ergebnis fordert
+                readonly: False                             # Nur lesen ist auf False
+                active_line: False
+
+        MDCard:                                         # 2 Card Mitte links
+            id: bottom_left_card
+            size_hint_y: 0.08
+            size_hint_x: 0.3
+            pos_hint: {"center_x": .18, "top": .47}
+            opacity: 0
+            disabled: True
+            MDTextField:                                    # Label im der top card
+                id: input_bottom_left
+                text: ''
+                halign: 'center'
+                size_hint_x: 0.8
+                pos_hint: {"center_x": .5, "center_y": .5}
+                required: False                             # Text ist nicht erforderlich / Auf True setzen wenn es ein Ergebnis fordert
+                readonly: False                             # Nur lesen ist auf False
+                active_line: False
+        MDCard:                                         # 2 Card Mitte links
+            id: bottom_middle_card
+            size_hint_y: 0.08
+            size_hint_x: 0.3
+            pos_hint: {"center_x": .5, "top": .47}
+            opacity: 0
+            disabled: True
+            MDTextField:                                    # Label im der top card
+                id: input_bottom_middle
+                text: ''
+                halign: 'center'
+                size_hint_x: 0.8
+                pos_hint: {"center_x": .5, "center_y": .5}
+                required: False                             # Text ist nicht erforderlich / Auf True setzen wenn es ein Ergebnis fordert
+                readonly: False                             # Nur lesen ist auf False
+                active_line: False
+        MDCard:                                         # 2 Card Mitte links
+            id: bottom_right_card
+            size_hint_y: 0.08
+            size_hint_x: 0.3
+            pos_hint: {"center_x": .82, "top": .47}
+            opacity: 0
+            disabled: True
+            MDTextField:                                    # Label im der top card
+                id: input_bottom_right
+                text: ''
+                halign: 'center'
+                size_hint_x: 0.8
+                pos_hint: {"center_x": .5, "center_y": .5}
+                required: False                             # Text ist nicht erforderlich / Auf True setzen wenn es ein Ergebnis fordert
+                readonly: False                             # Nur lesen ist auf False
+                active_line: False
+
+        MDRaisedButton:
+            id: check_answer_sachaufgaben
+            text: 'Überprüfen'
+            halign: 'center'
+            pos_hint: {'center_x': .5, 'top': .35}
+            opacity: 0
+            disabled: True
+            on_press: root.check_answer_sachaufgabe()
+
+
+                
