@@ -131,13 +131,115 @@ class PlusMinus(MDScreen):
             
 
 
+class Sachaufgaben(MDScreen):
+    def __init__(self, **kwargs):
+        super(Sachaufgaben, self).__init__(**kwargs)
+    def start_sachaufgaben(self):                               ############ Zeitverzögerung für die Animation
+        Clock.schedule_once(self.start_on_sachaufgaben, 0.1)    # um 0.1 Sekunden verzögern
+    def start_on_sachaufgaben(self, dt):                        ############ Wird nach drücken des Start Buttons ausgelöst
+        self.ids.start_btn_sachaufgaben.opacity = 0             # Start Button unsichtbar nach klick auf start
+        self.ids.start_btn_sachaufgaben.disabled = True         # Start Button deaktivieren nach klick auf start
+        self.ids.topcard.opacity = 1                            # MDCards sichtbar machen nach klick auf start
+        self.ids.topcard.disabled = False                       # MDCards aktivieren nach klick auf start
+        self.ids.middle_left_card.opacity = 1                   # MDCards sichtbar machen nach klick auf start
+        self.ids.middle_left_card.disabled = False              # MDCards aktivieren nach klick auf start
+        self.ids.middle_right_card.opacity = 1                  # MDCards sichtbar machen nach klick auf start
+        self.ids.middle_right_card.disabled = False             # MDCards aktivieren nach klick auf start
+        self.ids.bottom_left_card.opacity = 1                   # MDCards sichtbar machen nach klick auf start
+        self.ids.bottom_left_card.disabled = False              # MDCards aktivieren nach klick auf start
+        self.ids.bottom_middle_card.opacity = 1                 # MDCards sichtbar machen nach klick auf start
+        self.ids.bottom_middle_card.disabled = False            # MDCards aktivieren nach klick auf start
+        self.ids.bottom_right_card.opacity = 1                  # MDCards sichtbar machen nach klick auf start
+        self.ids.bottom_right_card.disabled = False             # MDCards aktivieren nach klick auf start
+        self.ids.check_answer_sachaufgaben.opacity = 1          # Beantworten Button auf Sichtbar
+        self.ids.check_answer_sachaufgaben.disabled = False     # Beantworten Button auf Aktiv
+        self.aufgabe_bauen_nur_bottom()
+
+    def close_sachaufgaben(self):                               ############ Zeitverzögerung für die Animation
+        Clock.schedule_once(self.close_on_sachaufgaben, 0.1)    # um 0.1 Sekunden verzögern
+    def close_on_sachaufgaben(self,dt):                         ############ Wird beim drücken des Close Buttons getriggert
+        self.ids.start_btn_sachaufgaben.opacity = 1             # Bei Close den Start Button wieder sichtbar machen
+        self.ids.start_btn_sachaufgaben.disabled = False        # Bei Close den Start Button wieder aktivieren machen
+        self.ids.topcard.opacity = 0                            # MDCards unsichtbar machen nach klick auf close
+        self.ids.topcard.disabled = True                        # MDCards deaktivieren nach klick auf close
+        self.ids.middle_left_card.opacity = 0                   # MDCards unsichtbar machen nach klick auf close
+        self.ids.middle_left_card.disabled = True               # MDCards deaktivieren nach klick auf close
+        self.ids.middle_right_card.opacity = 0                  # MDCards unsichtbar machen nach klick auf close
+        self.ids.middle_right_card.disabled = True              # MDCards deaktivieren nach klick auf close
+        self.ids.bottom_left_card.opacity = 0                   # MDCards unsichtbar machen nach klick auf close
+        self.ids.bottom_left_card.disabled = True               # MDCards deaktivieren nach klick auf close
+        self.ids.bottom_middle_card.opacity = 0                 # MDCards unsichtbar machen nach klick auf close
+        self.ids.bottom_middle_card.disabled = True             # MDCards deaktivieren nach klick auf close
+        self.ids.bottom_right_card.opacity = 0                  # MDCards unsichtbar machen nach klick auf close
+        self.ids.bottom_right_card.disabled = True              # MDCards deaktivieren nach klick auf close
+        self.ids.input_bottom_left.text = ""                    # Input auf 0 zurücksetzen
+        self.ids.input_bottom_middle.text = ""                  # Input auf 0 zurücksetzen
+        self.ids.input_bottom_right.text = ""                   # Input auf 0 zurücksetzen
+        self.ids.input_middle_right.text = ""                   # Input auf 0 zurücksetzen
+        self.ids.input_middle_left.text = ""                    # Input auf 0 zurücksetzen
+        self.ids.input_top.text = ""                            # Input auf 0 zurücksetzen
+        self.ids.check_answer_sachaufgaben.opacity = 0          # Beantworten Button auf Sichtbar
+        self.ids.check_answer_sachaufgaben.disabled = True      # Beantworten Button auf Aktiv
+
+    def aufgabe_bauen_nur_bottom(self):                         ############ Bauen der Methode um die Cards und Inputs mit rechnungen zu füllen
+        try:
+            self.num1 = random.randint(0,20)                    # Zufallszahl zwischen 0 und 20 generieren
+            self.num2 = random.randint(0,30)                    # Zufallszahl zwischen 0 und 20 generieren
+            self.num3 = random.randint(0,50)                    # Zufallszahl zwischen 0 und 20 generieren
+            self.ids.input_bottom_left.text = str(self.num1)    # Num1 dem unteren linken input zuweisen
+            self.ids.input_bottom_left.readonly = True          # Das die Zahl nicht bearbeitet werden kann
+            self.ids.input_bottom_middle.text = str(self.num2)  # Num2 dem unteren mittleren input zuweisen
+            self.ids.input_bottom_middle.readonly = True        # Das die Zahl nicht bearbeitet werden kann
+            self.ids.input_bottom_right.text = str(self.num3)   # Num3 dem unteren rechten input zuweisen
+            self.ids.input_bottom_right.readonly = True         # Das die Zahl nicht bearbeitet werden kann
+        except ValueError:
+            print("ERROR aufgabe_bauen")
+
+    def check_answer_sachaufgabe(self):                             ############ Methode zum Überprüfen ob die Eingaben richtig sind
+        try:
+            eingabe_mitte_links = self.ids.input_middle_left.text   # Die Eingabe Mitte Links holen
+            eingabe_mitte_rechts = self.ids.input_middle_right.text # Die Eingabe Mitte Rechts holen
+            eingabe_top = self.ids.input_top.text                   # Die Eingabe oben holen
+            eingabe_mitte_links = int(eingabe_mitte_links)          # In eine Ganzzahl umwandeln
+            eingabe_mitte_rechts = int(eingabe_mitte_rechts)        # In eine Ganzzahl umwandeln
+            eingabe_top = int(eingabe_top)                          # In eine Ganzzahl umwandeln
+            self.num4 = self.num1 + self.num2                       # Die vierte Nummer ist Num1 + Num2
+            self.num5 = self.num2 + self.num3                       # Die fünfte Nummer ist Num2 + Num3
+            self.num6 = self.num4 + self.num5                       # Die sechste Nummer ist Num4 + Num5
+            if eingabe_mitte_links == self.num4 and eingabe_mitte_rechts == self.num5 and eingabe_top == self.num6:
+                print("Richtig")
+                self.ergebnis_kurz_einblenden()                     # Wenn alles richtig ist wird das Zeitmodul aktiviert und eine neue aufgabe generiert
+                
+            else:
+                print("Falsch")
+
+        except ValueError:
+            print("ERROR check_answer_sachaufgabe")
+
+    def ergebnis_kurz_einblenden(self):                         ############ Wird aufgerufen wenn die Ergebnisse richtig eingegeben werden
+        self.ergebnis_einblenden()                              # Zeigt den Text an der Random ausgesucht wird
+        Clock.schedule_once(self.ergebnis_ausblenden, 1)        # Nach 1 Sekunde wird die Ergebnis ausblenden Methode aufgerufen
+    def ergebnis_einblenden(self):                              ############ Generiert den Text und setzt das Label auf opacity = 1
+        self.ids.ergebnis_sachaufgaeben.text = random.choice(["Super!", "Richtig!", "Weiter so!"])
+        self.ids.ergebnis_sachaufgaeben.opacity = 1
+    def ergebnis_ausblenden(self, dt):                          ############ Löscht die Inputs, und generiert eine neue Aufgabe
+        self.ids.ergebnis_sachaufgaeben.opacity = 0
+        self.ids.input_middle_left.text = ""
+        self.ids.input_middle_right.text = ""
+        self.ids.input_top.text = ""
+        self.aufgabe_bauen_nur_bottom()
+
+        
+    
 class Myyapp(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Dark"
-        self.theme_cls.primary_palette = "LightGreen"
+        self.theme_cls.primary_palette = "BlueGray"
         #Window.size = (411,731)
         #Config.set('graphics', 'dpi', '160')
         return Builder.load_file("desi.kv")
     
 if __name__ == "__main__":
     Myyapp().run()
+
+
